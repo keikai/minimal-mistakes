@@ -4,18 +4,18 @@
 
 .masthead {
   position: relative;
-  border-bottom: 1px solid $border-color;
   -webkit-animation: $intro-transition;
   animation: $intro-transition;
   -webkit-animation-delay: 0.15s;
   animation-delay: 0.15s;
   z-index: 20;
+  background-color: $header-background;
+  height: 56px;
 
   &__inner-wrap {
     @include clearfix;
     margin-left: auto;
     margin-right: auto;
-    padding: 1em;
     max-width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -51,6 +51,9 @@
   align-self: center;
   font-weight: bold;
   z-index: 20;
+  font-family: $logo-font;
+  font-size: 24px;
+  color: $logo-color;
 }
 
 .masthead__menu {
@@ -80,9 +83,15 @@
   display: block;
   list-style-type: none;
   white-space: nowrap;
+  font-size: 16px;
+  font-family: "Cabin Regular";
 
   &--lg {
     padding-right: 2em;
     font-weight: 700;
+  }
+
+  a{
+    color: $background-color;
   }
 }

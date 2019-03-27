@@ -12,7 +12,7 @@
   /* sticky footer fix start */
   position: absolute;
   bottom: 0;
-  height: auto;
+  height: 78px;
   /* sticky footer fix end */
   margin-top: 3em;
   color: $muted-text-color;
@@ -20,7 +20,7 @@
   animation: $intro-transition;
   -webkit-animation-delay: 0.45s;
   animation-delay: 0.45s;
-  background-color: $footer-background-color;
+  background-color: $header-background;
 
   footer {
     @include clearfix;
@@ -28,7 +28,7 @@
     margin-right: auto;
     margin-top: 2em;
     max-width: 100%;
-    padding: 0 1em 2em;
+
 
     @include breakpoint($x-large) {
       max-width: $x-large;
@@ -55,6 +55,8 @@
 .page__footer-copyright {
   font-family: $global-font-family;
   font-size: $type-size-7;
+  text-align: center;
+  color: $footer-color;
 }
 
 .page__footer-follow {
@@ -88,4 +90,8 @@
       white-space: nowrap;
     }
   }
+}
+
+.privacy:hover{
+  color: $logo-color;
 }

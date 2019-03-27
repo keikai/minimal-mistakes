@@ -177,12 +177,10 @@
   -ms-flex-align: center;
   align-items: center;
   min-height: $nav-height;
-  background: $background-color;
 
   a {
     display: block;
     margin: 0 1rem;
-    color: $masthead-link-color;
     text-decoration: none;
 
     &:hover {
@@ -433,11 +431,13 @@
 .nav__list .nav__items {
   margin: 0;
   font-size: 1.25rem;
+  background-color: $nav-background;
 
+  /*
   a {
     color: inherit;
   }
-
+  */
   .active {
     margin-left: -0.5em;
     padding-left: 0.5em;
@@ -525,6 +525,7 @@
   width: 100%;
   list-style: none;
   font-size: $type-size-6;
+  background-color: $nav-background;
 
   @include breakpoint($large) {
     font-size: $type-size-7;
@@ -536,10 +537,10 @@
     color: $muted-text-color;
     font-weight: bold;
     line-height: 1.5;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid $background-color;
 
     &:hover {
-      color: $text-color;
+      color: $link-color-hover;
     }
   }
 
