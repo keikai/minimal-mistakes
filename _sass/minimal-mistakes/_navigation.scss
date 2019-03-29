@@ -525,12 +525,13 @@
   padding: 0;
   width: 100%;
   list-style: none;
-  font-size: $type-size-6;
   background-color: $nav-background;
 
+  /*
   @include breakpoint($large) {
     font-size: $type-size-7;
   }
+  */
 
   a {
     display: block;
