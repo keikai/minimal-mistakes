@@ -19,11 +19,13 @@
   cursor: pointer;
   -webkit-transition: 0.2s;
   transition: 0.2s;
-  color: $base07;
+  color: $background-color;
 
+  /*
   &:hover {
     color: mix(#000, $primary-color, 25%);
   }
+  */
 }
 
 .search-icon {
