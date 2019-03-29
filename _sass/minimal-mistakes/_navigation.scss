@@ -237,7 +237,6 @@
         left: 0;
         bottom: 0;
         height: 4px;
-        background: $background-color;
         width: 100%;
         -webkit-transition: $global-transition;
         transition: $global-transition;
@@ -435,6 +434,8 @@
   margin: 0;
   font-size: 1.25rem;
   background-color: $nav-background;
+  padding: 10px;
+  border-radius: 5px;
 
   /*
   a {
@@ -479,7 +480,7 @@
 .nav__title {
   margin: 0;
   padding: 0.5rem 0.75rem;
-  font-family: $sans-serif-narrow;
+  font-family: $global-font-family;
   font-size: $type-size-5;
   font-weight: bold;
 }
@@ -488,7 +489,7 @@
   display: block;
   margin: 0.5rem 0;
   padding: 0.25rem 0;
-  font-family: $sans-serif-narrow;
+  font-family: $global-font-family;
   font-size: $type-size-6;
   font-weight: bold;
   text-transform: uppercase;
@@ -499,7 +500,7 @@
      ========================================================================== */
 
 .toc {
-  font-family: $sans-serif-narrow;
+  font-family: $global-font-family;
   color: $gray;
   background-color: $background-color;
   border-radius: $border-radius;
@@ -543,6 +544,7 @@
 
     &:hover {
       color: $link-color-hover;
+      text-decoration: none;
     }
   }
 
