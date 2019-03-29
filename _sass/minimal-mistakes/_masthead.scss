@@ -100,4 +100,8 @@
   a{
     color: $background-color;
   }
+
+  a:hover{
+    color: $logo-color;
+  }
 }
