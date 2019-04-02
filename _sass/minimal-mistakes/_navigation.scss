@@ -432,9 +432,8 @@
 
 .nav__list .nav__items {
   margin: 0;
-  font-size: 1.25rem;
   background-color: $nav-background;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
 
   /*
@@ -442,6 +441,10 @@
     color: inherit;
   }
   */
+  ul{
+    font-size: $sidebar-item;
+  }
+
   .active {
     margin-left: -0.5em;
     padding-left: 0.5em;
@@ -489,10 +492,9 @@
   display: block;
   margin: 0.5rem 0;
   padding: 0.25rem 0;
-  font-family: $global-font-family;
-  font-size: $type-size-6;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-family: $header-font-family;
+  font-size: $sub-title-size;
+  font-weight: $medium-weight;
 }
 
 /*
@@ -537,10 +539,10 @@
   a {
     display: block;
     padding: 0.25rem 0.75rem;
-    color: $muted-text-color;
     font-weight: bold;
     line-height: 1.5;
     border-bottom: 1px solid $background-color;
+    font-size: 0.889em;
 
     &:hover {
       color: $link-color-hover;

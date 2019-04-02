@@ -60,7 +60,7 @@ $lighter-gray: mix(#fff, $gray, 90%) !default;
 $background-color: #fff !default;
 $code-background-color: #fafafa !default;
 $code-background-color-dark: $light-gray !default;
-$text-color: $dark-gray !default;
+$text-color: #4a4a4a !default;
 $muted-text-color: mix(#fff, $text-color, 35%) !default;
 $border-color: $lighter-gray !default;
 $form-background-color: $lighter-gray !default;
@@ -106,7 +106,7 @@ $youtube-color: #bb0000 !default;
 $xing-color: #006567 !default;
 
 /* links */
-$link-color: mix(#000, $info-color, 15%) !default;
+$link-color: $text-color !default;
 $link-color-hover: #585884 !default;
 $link-color-visited: mix(#fff, $link-color, 15%) !default;
 $masthead-link-color: $primary-color !default;
@@ -168,3 +168,8 @@ $logo-color: #f22000;
 $logo-font: 'Exo 2', sans-serif;
 $footer-color: #848484;
 $nav-background: #eaeaea;
+$keikai-text-color: #4a4a4a;
+$sub-title-size: 0.909em; //~20px
+$sidebar-item: 0.727em; //~16px
+
+$medium-weight: 500;
