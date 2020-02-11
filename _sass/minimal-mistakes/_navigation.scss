@@ -443,6 +443,7 @@
   */
   ul{
     font-size: $sidebar-item;
+    text-indent: 15px;
   }
 
   .active {
@@ -570,4 +571,8 @@
   li ul li ul li ul li ul li ul > li a {
     padding-left: 3.25rem
   }
+}
+
+.current{
+  color: #f20000;
 }
