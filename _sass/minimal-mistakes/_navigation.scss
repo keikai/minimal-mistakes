@@ -196,7 +196,18 @@
     }
 
     &.site-title {
-      margin-left: 1rem;
+      @include breakpoint($small){
+        margin-left: 23px;
+      }
+      @include breakpoint($medium){
+        margin-left: 30px;
+      }
+      @include breakpoint($medium-wide){
+        margin-left: 48px;
+      }
+      @include breakpoint($x-large) {
+        margin-left: 72px;
+      }
     }
   }
 
