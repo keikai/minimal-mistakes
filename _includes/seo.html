@@ -165,4 +165,7 @@
 {% if site.naver_site_verification %}
   <meta name="naver-site-verification" content="{{ site.naver_site_verification }}">
 {% endif %}
+
+{% assign base_path= page.path | split: "/" | first %}
+{% include {{base_path}}_seo.html %}
 <!-- end _includes/seo.html -->
