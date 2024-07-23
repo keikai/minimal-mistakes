@@ -177,6 +177,7 @@
   -ms-flex-align: center;
   align-items: center;
   min-height: $nav-height;
+  height: 100%;
 
   a {
     display: block;
@@ -190,8 +191,7 @@
     }
 
     &.site-logo {
-      margin-left: 0;
-      margin-right: 0.5rem;
+      margin-left: 3rem;
     }
 
     &.site-title {
@@ -212,15 +212,13 @@
     outline: none;
     background-color: transparent;
     cursor: pointer;
+    margin-right: 3rem;
   }
 
   .visible-links {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
@@ -265,7 +263,7 @@
     padding: 5px;
     border: 1px solid $border-color;
     border-radius: $border-radius;
-    background: $background-color;
+    background: $header-background;
     -webkit-box-shadow: 0 2px 4px 0 rgba(#000, 0.16),
       0 2px 10px 0 rgba(#000, 0.12);
     box-shadow: 0 2px 4px 0 rgba(#000, 0.16), 0 2px 10px 0 rgba(#000, 0.12);
