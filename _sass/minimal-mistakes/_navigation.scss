@@ -431,6 +431,15 @@
       }
     }
   }
+
+  .level2{
+    font-size: $type-size-6;
+    font-weight: 500;
+  }
+
+  .level3{
+    font-size: $type-size-7;
+  }
 }
 
 .nav__list .nav__items {
