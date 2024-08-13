@@ -452,10 +452,7 @@
   }
   */
   .active {
-    margin-left: -0.5em;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    font-weight: bold;
+    color: $header-background;
   }
 
   @include breakpoint(max-width $large - 1px) {
