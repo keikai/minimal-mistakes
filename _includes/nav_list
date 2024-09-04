@@ -8,6 +8,7 @@
   <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label | default: "Toggle Menu" }}</label>
   <ul class="nav__items">
     {% assign stripped_page_url = page.url | remove: ".html" %}
+    <span id="pageurl" style="display:none;">{{ page.url }}</span>
     {% for nav in navigation %}
     {% if nav.url == stripped_page_url %}
       {% assign page_title = nav.title %}
