@@ -1,14 +1,11 @@
-function isSidebarRendered() {
-  return document.body //detect the body is loaded
-    && document.querySelector('.sidebar');
-}
-
 /**
  * scroll the current selected page link into view in the sidebar
  */
 var showCurrentPageLinkInView = function () {
   if (isSidebarRendered()) {
-    document.querySelector(".sidebar .active").scrollIntoView();
+    if (hasVerticalScrollbar(document.querySelector(".sidebar"))) {
+      document.querySelector(".sidebar .active").scrollIntoView();
+    }
     return;
   }
 
@@ -16,3 +13,13 @@ var showCurrentPageLinkInView = function () {
 };
 // IE10 or above
 window.requestAnimationFrame(showCurrentPageLinkInView);
+
+
+function hasVerticalScrollbar(element) {
+  return element.scrollHeight > element.clientHeight;
+}
+
+function isSidebarRendered() {
+  return document.body //detect the body is loaded
+    && document.querySelector('.sidebar');
+}
