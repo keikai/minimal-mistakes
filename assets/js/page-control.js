@@ -3,9 +3,13 @@
  */
 var showCurrentPageLinkInView = function () {
   if (isSidebarRendered()) {
-    if (hasVerticalScrollbar(document.querySelector(".sidebar"))) {
-      document.querySelector(".sidebar .active").scrollIntoView();
+    if (isVisibleInSidebar()) {
+      return;
     }
+    if (!hasVerticalScrollbar(getSidebar())) {
+      return;
+    }
+    scrollActivePageIntoView();
     return;
   }
 
@@ -21,5 +25,34 @@ function hasVerticalScrollbar(element) {
 
 function isSidebarRendered() {
   return document.body //detect the body is loaded
-    && document.querySelector('.sidebar');
+    && getSidebar();
+}
+
+function isVisibleInSidebar() {
+  const activeLinkRect = getActiveLink().getBoundingClientRect();
+  const sidebarRect = getSidebar().getBoundingClientRect();
+
+  return (
+    activeLinkRect.top >= sidebarRect.top &&
+    activeLinkRect.left >= sidebarRect.left &&
+    activeLinkRect.bottom <= sidebarRect.bottom &&
+    activeLinkRect.right <= sidebarRect.right
+  );
+}
+
+/**
+ * activePageItem.scrollIntoView() scrolls the content area too. Hence, setting the scrollTop of the sidebar to scroll sidebar only
+ */
+function scrollActivePageIntoView() {
+  const sidebar = getSidebar();
+
+  sidebar.scrollTop = getActiveLink().offsetTop - sidebar.offsetTop;
+}
+
+function getActiveLink() {
+  return document.querySelector(".sidebar .active");
+}
+
+function getSidebar() {
+  return document.querySelector('.sidebar');
 }
