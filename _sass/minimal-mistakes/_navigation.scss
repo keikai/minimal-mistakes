@@ -435,6 +435,8 @@
   .level2{
     font-size: $type-size-6;
     font-weight: 500;
+    line-height: 1.2; /* make 2 lines more close */
+    display: inline-block;
   }
 
   .level3{
