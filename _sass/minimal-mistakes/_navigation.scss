@@ -333,6 +333,10 @@
 /*
      Navigation list
      ========================================================================== */
+@mixin close-lines {
+  line-height: 1.2; /* make 2 lines more close */
+  display: inline-block;
+}
 
 .nav__list {
   margin-bottom: 1.5em;
@@ -432,15 +436,19 @@
     }
   }
 
+  .level1{
+    @include close-lines;
+  }
+
   .level2{
     font-size: $type-size-6;
     font-weight: 500;
-    line-height: 1.2; /* make 2 lines more close */
-    display: inline-block;
+    @include close-lines;
   }
 
   .level3{
     font-size: $type-size-7;
+    @include close-lines;
   }
 }
 
