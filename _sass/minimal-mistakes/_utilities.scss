@@ -352,11 +352,11 @@ body:hover .visually-hidden button {
   }
 
   &:before {
-    top: (-2 * $navicon-height);
+    top: -0.4rem;
   }
 
   &:after {
-    bottom: (-2 * $navicon-height);
+    bottom: -0.4rem;
   }
 }
 
