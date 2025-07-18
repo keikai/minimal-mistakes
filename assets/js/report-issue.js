@@ -1,8 +1,8 @@
 // Create and style the report issue button
 const reportButton = document.createElement('div');
 reportButton.id = 'report-issue-button';
-reportButton.innerHTML = '<i class="fas fa-bug"></i>';
-reportButton.title = 'Report a document issue';
+reportButton.innerHTML = '<i class="fas fa-pen-square"></i>';
+reportButton.title = 'Spotted an error or a missing doc? Open a GitHub issue';
 
 // Style the button
 reportButton.style.cssText = `
@@ -11,8 +11,7 @@ reportButton.style.cssText = `
   right: 20px;
   width: 56px;
   height: 56px;
-  background-color: #007cba;
-  border-radius: 50%;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,20 +19,9 @@ reportButton.style.cssText = `
   box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
   transition: all 0.3s ease;
   z-index: 9999;
-  color: white;
   font-size: 20px;
 `;
 
-// Add hover effects
-reportButton.addEventListener('mouseenter', function() {
-  this.style.transform = 'scale(1.1)';
-  this.style.boxShadow = '0 6px 16px rgba(0, 124, 186, 0.4)';
-});
-
-reportButton.addEventListener('mouseleave', function() {
-  this.style.transform = 'scale(1)';
-  this.style.boxShadow = '0 4px 12px rgba(0, 124, 186, 0.3)';
-});
 
 // Add click functionality
 reportButton.addEventListener('click', function () {

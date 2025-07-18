@@ -586,3 +586,26 @@ body {
   color: white;
   font-size: 16px;
 }
+
+#report-issue-button{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
+  transition: all 0.3s ease;
+  z-index: 9999;
+  font-size: 20px;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 124, 186, 0.4);
+    background: #f5f5f5;
+  }
+}
