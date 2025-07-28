@@ -103,16 +103,6 @@ $(function() {
     clearTimeout(timer);
   });
 
-  $hlinks.on('mouseleave', function() {
-    // Mouse has left, start the timer
-    timer = setTimeout(function() {
-      $hlinks.addClass('hidden');
-    }, closingTime);
-  }).on('mouseenter', function() {
-    // Mouse is back, cancel the timer
-    clearTimeout(timer);
-  })
-
   // check if page has a logo
   if($logoImg.length !== 0){
     // check if logo is not loaded
