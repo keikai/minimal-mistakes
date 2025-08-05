@@ -555,6 +555,7 @@
     font-weight: bold;
     line-height: 1.5;
     border-bottom: 1px solid $background-color;
+    word-wrap: break-word;
 
     &:hover {
       color: $link-color-hover;
