@@ -81,6 +81,15 @@ body {
   & + .page__meta {
     margin-top: -0.5em;
   }
+
+  &::after{
+    content: ' ';
+    display: block;
+    height: 1px;
+    background: linear-gradient(to right, transparent, $header-background 20%, $header-background 80%, transparent);
+    margin: 20px 0 30px;
+    width: auto;
+  }
 }
 
 .page__lead {
@@ -89,6 +98,9 @@ body {
 }
 
 .page__content {
+  h1 {
+    font-size: calc(#{$h-size-1} - 0.2em);
+  }
   h2 {
     padding-bottom: 0.5em;
     border-bottom: 1px solid $border-color;
