@@ -86,7 +86,7 @@ body {
     content: ' ';
     display: block;
     height: 1px;
-    background: linear-gradient(to right, transparent, $header-background 20%, $header-background 80%, transparent);
+    background: linear-gradient(to right, transparent, $border-color 20%, $border-color 80%, transparent);
     margin: 20px 0 30px;
     width: auto;
   }
