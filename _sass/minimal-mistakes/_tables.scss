@@ -1,120 +1,95 @@
 /* ==========================================================================
    TABLES
-   ========================================================================== */
+   ==========================================================================
+*/
 
-table {
+/* specify .page__content as direct parent for {% highlight xml linenos %} also renders a table, need to avoid affecting the default table styles */
+.page__content > table {
   display: table;
   margin-bottom: 1.5em;
   width: 100%;
   font-family: $global-font-family;
   font-size: $type-size-6;
   border-collapse: collapse;
-  background-color: $background-color;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   word-break: auto-phrase;
-  
-  & + table {
-    margin-top: 1.5em;
-  }
-}
 
-// Responsive table wrapper
-.table-wrapper {
-  overflow-x: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5em;
+  thead {
+    background: linear-gradient(135deg, $primary-color, lighten($primary-color, 10%));
+    border: none;
 
-  table {
-    margin-bottom: 0;
-    box-shadow: none;
-    border-radius: 0;
-  }
-}
-
-thead {
-  background: linear-gradient(135deg, $primary-color, lighten($primary-color, 10%));
-  border: none;
-
-  th {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    font-size: $type-size-7;
-  }
-}
-
-th {
-  padding: 1em 0.75em;
-  text-align: left;
-  border: none;
-  position: relative;
-
-  &:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 25%;
-    height: 50%;
-    width: 1px;
-    background: rgba(255, 255, 255, 0.2);
-  }
-}
-
-td {
-  padding: 0.75em;
-  border: none;
-  border-bottom: 1px solid mix($background-color, $border-color, 50%);
-  transition: background-color 0.2s ease;
-}
-
-tbody tr {
-  &:hover {
-    background-color: mix($background-color, $primary-color, 95%);
-  }
-
-  &:nth-child(even) {
-    background-color: mix($background-color, $border-color, 97%);
-
-    &:hover {
-      background-color: mix($background-color, $primary-color, 92%);
+    th {
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-size: $type-size-7;
     }
   }
 
-  &:last-child td {
-    border-bottom: none;
+  th {
+    padding: 1em 0.75em;
+    text-align: left;
+    border: none;
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  td {
+    padding: 0.75em;
+    border: none;
+    border-bottom: 1px solid mix($background-color, $border-color, 50%);
+    transition: background-color 0.2s ease;
+  }
+
+  tbody tr {
+    &:hover {
+      background-color: mix($background-color, $primary-color, 95%);
+    }
+
+    &:nth-child(even) {
+      background-color: mix($background-color, $border-color, 97%);
+
+      &:hover {
+        background-color: mix($background-color, $primary-color, 92%);
+      }
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+
+  tr,
+  td,
+  th {
+    vertical-align: middle;
+  }
+
+
+  // Special styling for links in tables
+  td a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-bottom-color: $primary-color;
+      color: darken($primary-color, 10%);
+    }
   }
 }
 
-tr,
-td,
-th {
-  vertical-align: middle;
-}
 
-// Enhanced styles for code elements in tables
-td code,
-th code {
-  background-color: mix($background-color, $muted-text-color, 90%);
-  border: 1px solid mix($background-color, $muted-text-color, 80%);
-  border-radius: 4px;
-  padding: 0.2em 0.4em;
-  font-size: 0.9em;
-  color: $muted-text-color;
-}
-
-// Special styling for links in tables
-td a {
-  color: $primary-color;
-  text-decoration: none;
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease;
-
-  &:hover {
-    border-bottom-color: $primary-color;
-    color: darken($primary-color, 10%);
-  }
-}
