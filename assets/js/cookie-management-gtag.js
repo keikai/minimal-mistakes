@@ -11,7 +11,7 @@ function async (u, c) {
 
 
 
-async("https://www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, function () {
+async("www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, function () {
 	window.dataLayer = window.dataLayer || [];
 	function gtag () { window.dataLayer.push(arguments); }
 	gtag('consent', 'default', {
