@@ -18,9 +18,7 @@ fetch('https://www.zkoss.org/cookie_management.html').then(res => res.text())
         loadScript('https://www.zkoss.org/resource/js/page/cookieManagement.js');
     });
 
-var trackingId = window.GA_TRACKING_ID;
-var anonymizeIp = window.ANONYMIZE_IP;
-async("https://www.googletagmanager.com/gtag/js?id=" + trackingId, function () {
+async("https://www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, function () {
 	window.dataLayer = window.dataLayer || [];
 	function gtag () { window.dataLayer.push(arguments); }
 	gtag('consent', 'default', {
@@ -31,7 +29,7 @@ async("https://www.googletagmanager.com/gtag/js?id=" + trackingId, function () {
         'wait_for_update': 1000
     });
 	gtag('js', new Date());        
-	gtag('config', trackingId, {'anonymize_ip': anonymizeIp});
+	gtag('config', window.GA_TRACKING_ID, {'anonymize_ip': window.ANONYMIZE_IP});
 	window.gtag = gtag;
 });
 
@@ -46,29 +44,6 @@ Object.defineProperty(window, 'loadGaScript', {
                 'analytics_storage': 'granted'
             });
         };
-    },
-    set (value) {
-    }
-});
-
-Object.defineProperty(window, 'loadGaScript', {
-    configurable: false,
-    get () {
-        return function (...args) {
-            var script = document.createElement('script');
-            script.async = true;
-            script.src = 
-            document.head.appendChild(script);
-
-            async('www.googletagmanager.com/gtag/js?id=' + window.GA_TRACKING_ID, function () {
-                window.dataLayer = window.dataLayer || [];
-                function gtag () { window.dataLayer.push(arguments); }
-                gtag('js', new Date());        
-                gtag('config', window.GA_TRACKING_ID, {'anonymize_ip': window.ANONYMIZE_IP});
-                window.gtag = gtag;
-            });
-            
-        }
     },
     set (value) {
     }
