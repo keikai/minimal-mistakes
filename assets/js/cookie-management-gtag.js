@@ -1,4 +1,3 @@
-// instantiation!
 function async (u, c) {
     var d = document;
     var t = 'script';
@@ -17,29 +16,55 @@ fetch('https://www.zkoss.org/cookie_management.html').then(res => res.text())
         const oldElement = document.getElementById('cookie-content');
         oldElement.replaceWith(newElement);
         loadScript('https://www.zkoss.org/resource/js/page/cookieManagement.js');
-        const policyUrl = document.getElementById('privacyPolicyUrl');
-        if (policyUrl) {
-            policyUrl.href = 'https://keikai.io/privacy';
-        }
     });
+
+var trackingId = window.GA_TRACKING_ID;
+var anonymizeIp = window.ANONYMIZE_IP;
+async("https://www.googletagmanager.com/gtag/js?id=" + trackingId, function () {
+	window.dataLayer = window.dataLayer || [];
+	function gtag () { window.dataLayer.push(arguments); }
+	gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 1000
+    });
+	gtag('js', new Date());        
+	gtag('config', trackingId, {'anonymize_ip': anonymizeIp});
+	window.gtag = gtag;
+});
 
 Object.defineProperty(window, 'loadGaScript', {
     configurable: false,
     get () {
         return function (...args) {
-            var trackingId = window.GA_TRACKING_ID;
-            var anonymizeIp = window.ANONYMIZE_IP;
+            window.gtag('consent', 'update', {
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted',
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted'
+            });
+        };
+    },
+    set (value) {
+    }
+});
 
+Object.defineProperty(window, 'loadGaScript', {
+    configurable: false,
+    get () {
+        return function (...args) {
             var script = document.createElement('script');
             script.async = true;
-            script.src = "https://www.googletagmanager.com/gtag/js?id=" + trackingId;
+            script.src = 
             document.head.appendChild(script);
 
-            async('www.googletagmanager.com/gtag/js?id=' + trackingId, function () {
+            async('www.googletagmanager.com/gtag/js?id=' + window.GA_TRACKING_ID, function () {
                 window.dataLayer = window.dataLayer || [];
                 function gtag () { window.dataLayer.push(arguments); }
                 gtag('js', new Date());        
-                gtag('config', trackingId, {'anonymize_ip': anonymizeIp});
+                gtag('config', window.GA_TRACKING_ID, {'anonymize_ip': window.ANONYMIZE_IP});
                 window.gtag = gtag;
             });
             
