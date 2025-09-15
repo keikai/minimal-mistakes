@@ -9,14 +9,7 @@ function async (u, c) {
 }
 
 
-fetch('https://www.zkoss.org/cookie_management.html').then(res => res.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const newElement = parser.parseFromString(html, 'text/html').body.firstElementChild;
-        const oldElement = document.getElementById('cookie-content');
-        oldElement.replaceWith(newElement);
-        loadScript('https://www.zkoss.org/resource/js/page/cookieManagement.js');
-    });
+
 
 async("https://www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, function () {
 	window.dataLayer = window.dataLayer || [];
@@ -31,6 +24,14 @@ async("https://www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, fu
 	gtag('js', new Date());        
 	gtag('config', window.GA_TRACKING_ID, {'anonymize_ip': window.ANONYMIZE_IP});
 	window.gtag = gtag;
+	fetch('https://www.zkoss.org/cookie_management.html').then(res => res.text())
+    .then(html => {
+        const parser = new DOMParser();
+        const newElement = parser.parseFromString(html, 'text/html').body.firstElementChild;
+        const oldElement = document.getElementById('cookie-content');
+        oldElement.replaceWith(newElement);
+        loadScript('https://www.zkoss.org/resource/js/page/cookieManagement.js');
+    });
 });
 
 Object.defineProperty(window, 'loadGaScript', {
