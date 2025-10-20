@@ -30,13 +30,18 @@ layout: default
     <div class="page__inner-wrap">
       {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
+          {% unless page_title %}
+            {% assign page_title = page.title %}
+          {% endunless %}
           {% if page_title %}<h1 id="page-title" class="page__title p-name" itemprop="headline">
             <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page_title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
           </h1>{% endif %}
           {% include page__meta.html %}
         </header>
       {% endunless %}
-
+      {% if page.category == 'small-talk' %}
+          {% include small_talk_profile.html %}
+      {% endif %}
       <section class="page__content e-content" itemprop="text">
         {% if page.toc %}
           <aside class="sidebar__right {% if page.toc_sticky %}sticky{% endif %}">
