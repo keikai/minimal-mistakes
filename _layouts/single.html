@@ -34,7 +34,7 @@ layout: default
             {% assign page_title = page.title %}
           {% endunless %}
           {% if page_title %}<h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="{{ page.url | remove '.html' | absolute_url }}" class="u-url" itemprop="url">{{ page_title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
+            <a href="{{ page.url | remove: '.html' | absolute_url }}" class="u-url" itemprop="url">{{ page_title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
           </h1>{% endif %}
           {% include page__meta.html %}
         </header>
