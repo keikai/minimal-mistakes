@@ -2,4 +2,4 @@
     window.GA_TRACKING_ID = "{{ site.analytics.google.tracking_id }}";
     window.ANONYMIZE_IP = {{ site.analytics.google.anonymize_ip | default: false | jsonify }};
 </script>
-<script src="/assets/js/cookie-management-gtag.js"></script>
+<script src="https://www.zkoss.org/resource/js/page/load-ga4.js"></script>
