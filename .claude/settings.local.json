@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:www.claudemcp.com)",
+      "mcp__puppeteer__puppeteer_navigate",
+      "mcp__puppeteer__puppeteer_screenshot"
+    ],
+    "deny": []
+  },
+  "enabledMcpjsonServers": [
+    "puppeteer"
+  ]
+}
