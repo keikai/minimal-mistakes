@@ -1,6 +1,7 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
  <script>
     window.GA_TRACKING_ID = "{{ site.analytics.google.tracking_id }}";
+    window.COOKIE_POLICY_URL = "{{ site.analytics.google.policy_url }}";
     window.ANONYMIZE_IP = {{ site.analytics.google.anonymize_ip | default: false | jsonify }};
 </script>
 <script src="/assets/js/cookie-management-gtag.js"></script>

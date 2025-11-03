@@ -1,57 +1,45 @@
-function async (u, c) {
-    var d = document;
-    var t = 'script';
-    var o = d.createElement(t);
-    var s = d.getElementsByTagName(t)[0];
-    o.src = '//' + u;
-    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-    s.parentNode.insertBefore(o, s);
-}
-
-
-
-
-async("www.googletagmanager.com/gtag/js?id=" + window.GA_TRACKING_ID, function () {
-	window.dataLayer = window.dataLayer || [];
-	function gtag () { window.dataLayer.push(arguments); }
-	gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 1000
-    });
-	gtag('js', new Date());        
-	gtag('config', window.GA_TRACKING_ID, {'anonymize_ip': window.ANONYMIZE_IP});
-	window.gtag = gtag;
-	fetch('https://www.zkoss.org/cookie_management.html').then(res => res.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const newElement = parser.parseFromString(html, 'text/html').body.firstElementChild;
-        const oldElement = document.getElementById('cookie-content');
-        oldElement.replaceWith(newElement);
-        loadScript('https://www.zkoss.org/resource/js/page/cookieManagement.js');
-    });
-});
-
-Object.defineProperty(window, 'loadGaScript', {
-    configurable: false,
-    get () {
-        return function (...args) {
-            window.gtag('consent', 'update', {
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted',
-                'ad_storage': 'granted',
-                'analytics_storage': 'granted'
+document.addEventListener('DOMContentLoaded', function () {
+    (function () {
+        const GA_MEASUREMENT_ID = window.GA_TRACKING_ID; // from provider
+        const DEV_HOST = 'http://localhost:8080';
+        const PROD_HOST = 'https://www.zkoss.org';
+        /** use deferred to wait for the util to finish loading before executing loadGaForMeasurementId */
+        window.cookieManagementUtil = window.cookieManagementUtil || { loaded: $.Deferred() };
+        let host = window.location.host === 'localhost:8080' ? DEV_HOST : PROD_HOST;
+        let debugging = false;
+        fetch(host + '/cookie_management.html', {mode: 'cors'}).then(res => res.text())
+            .then(html => {
+                if (debugging) {
+                    console.debug('adding cookie popup html to page');
+                }
+                const parser = new DOMParser();
+                const newElement = parser.parseFromString(html, 'text/html').body.firstElementChild;
+                const oldElement = document.getElementById('cookie-content');
+                oldElement.replaceWith(newElement);
+                loadScript(host + '/resource/js/page/cookieManagement.js');
+                const policyUrl = document.getElementById('privacyPolicyUrl');
+                if (policyUrl && window.COOKIE_POLICY_URL) {
+                    if (debugging) {
+                        console.debug('updating privacy policy URL in cookie popup');
+                    }
+                    policyUrl.href = window.COOKIE_POLICY_URL;
+                }
             });
-        };
-    },
-    set (value) {
-    }
+        function loadScript (url) {
+            if (debugging) {
+                console.debug('loading management script from ' + url);
+            }
+            const script = document.createElement('script');
+            script.src = url;
+            script.setAttribute('crossorigin', 'anonymous');
+            script.type = 'application/x-javascript';
+            document.body.appendChild(script);
+        }
+        window.cookieManagementUtil.loaded.then(function () {
+            // debug messages to console
+            window.cookieManagementUtil.debug = debugging;
+            window.cookieManagementUtil.logDebug('loading cookie popup html');
+            window.cookieManagementUtil.loadGaForMeasurementId(GA_MEASUREMENT_ID);
+        });
+    })();
 });
-
-function loadScript (url) {
-    const script = document.createElement('script');
-    script.src = url;
-    document.head.appendChild(script);
-}
