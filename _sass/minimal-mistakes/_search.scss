@@ -63,9 +63,6 @@
     display: block;
     margin-bottom: 0;
     padding: 8px 8px;
-    border: none;
-    outline: none;
-    box-shadow: none;
     background-color: transparent;
     font-size: $type-size-4;
     font-family: 'Roboto', sans-serif;
@@ -220,4 +217,13 @@
 
 #cse-search-box-form-id{
   padding:0;
+}
+
+.page-url {
+  font-size: 0.7rem;
+  color: $muted-text-color;
+  word-break: break-word;
+  margin-top: 0.5em;
+  display: block;
+  font-family: $monospace;
 }
