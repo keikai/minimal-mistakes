@@ -1,7 +1,7 @@
 <script>
     //config for load-ga4.js, defaults to zkoss.org if unset
-    window.GA_MEASUREMENT_ID = {{ site.analytics.google.tracking_id }}; //provided by doc project config
-    window.GA_POLICY_URL = {{ site.analytics.google.policy_url }}; //provided by doc project config
+    window.GA_MEASUREMENT_ID = '{{ site.analytics.google.tracking_id }}'; //provided by doc project config
+    window.GA_POLICY_URL = '{{ site.analytics.google.policy_url }}'; //provided by doc project config
     window.GA_DEBUGGING = false;
     window.GA_DARK_THEME = false; // light for zkoss, dark for keikai
     window.GA_TARGET_DEV_HOST = 'localhost:4000'; //test page host
