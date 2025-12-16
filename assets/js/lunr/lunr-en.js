@@ -29,7 +29,7 @@ function showNoExactMatchWarning(hasExactMatch, result, resultdiv, query) {
       '<div class="search-no-exact-match">' +
       '<i class="fas fa-info-circle"></i> ' +
       'No exact match found for "<strong>' + escapeHtml(query) + '</strong>". ' +
-      'Showing similar results:' +
+      'Showing fuzzy search results:' +
       '</div>'
     );
   }
