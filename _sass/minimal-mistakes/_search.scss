@@ -227,3 +227,23 @@
   display: block;
   font-family: $monospace;
 }
+
+/* No exact match warning message */
+.search-no-exact-match {
+  padding: 1em;
+  margin-bottom: 1em;
+  background-color: mix($background-color, $warning-color, $notice-background-mix);
+  border-radius: $border-radius;
+  box-shadow: 0 1px 1px rgba($warning-color, 0.25);
+  color: $text-color;
+  font-size: $type-size-6;
+
+  i {
+    margin-right: 0.5em;
+    color: $warning-color;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
