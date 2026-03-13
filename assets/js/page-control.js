@@ -29,10 +29,11 @@ function isSidebarRendered() {
 }
 
 function isVisibleInSidebar() {
-  const activeLinkRect = getActiveLink().getBoundingClientRect();
-  const sidebarRect = getSidebar().getBoundingClientRect();
+  const activeLinkRect = getActiveLink()?.getBoundingClientRect(); //small talk doesn't have an active link
+  const sidebarRect = getSidebar()?.getBoundingClientRect();
 
   return (
+    activeLinkRect && sidebarRect &&
     activeLinkRect.top >= sidebarRect.top &&
     activeLinkRect.left >= sidebarRect.left &&
     activeLinkRect.bottom <= sidebarRect.bottom &&
