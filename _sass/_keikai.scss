@@ -8,10 +8,24 @@
     font-size: 16px;
 }
 
-.fa-check-circle{
+/* show version badge in function table */
+table sup {
+    padding: 1px 4px;
+    background-color: #F5DFDF;
+    border-radius: 4px;
+    color: #f22000;
+    font-size: 0.8em;
+    margin-left: 2px;
+    font-weight: normal;
+    top: -0.5em;
+    position: relative;
+    vertical-align: baseline;
+}
+
+.fa-check-circle {
     color: green;
 }
 
-.fa-times-circle{
+.fa-times-circle {
     color: red;
 }
