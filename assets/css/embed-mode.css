@@ -1,0 +1,24 @@
+html.embed-mode .masthead,
+html.embed-mode .sidebar,
+html.embed-mode #footer,
+html.embed-mode .page__footer,
+html.embed-mode .toc,
+html.embed-mode .page__share,
+html.embed-mode .page__related,
+html.embed-mode .pagination,
+html.embed-mode .page__comments-form,
+html.embed-mode .ads,
+html.embed-mode .adsbygoogle {
+  display: none !important;
+}
+
+html.embed-mode .page {
+  float: none;
+  width: 100%;
+  padding-right: 0;
+}
+
+html.embed-mode #main {
+  max-width: 100%;
+  padding: 1em;
+}
