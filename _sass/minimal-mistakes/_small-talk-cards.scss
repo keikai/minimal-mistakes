@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Small Talk listing cards (categories / archive pages)
+
+   Ported from the theme's `material` branch (commit 4e3eb73e "style small talk
+   listing as MD3 cards"), with the MD3 token subset those cards read (commit
+   f437cfdd). Only the Small-Talk design is brought over — none of the rest of
+   the material MD3 skin.
+
+   Imported by main.scss as a component (after the main partials), so it applies
+   under ANY skin — the design is not tied to a particular skin selection. It
+   only styles `.archive__item .card`, and in zkdoc that markup is emitted solely
+   for small-talk posts (see _includes/archive-single.html + small-talk-meta.html),
+   so nothing else on the site is affected.
+
+   Kept free of SCSS variables so it is order-independent (the original block used
+   $header-font-family on .card__title; dropped — the <h2> inherits the heading
+   font, so the result is identical).
+   ========================================================================== */
+
+/* ---- MD3 design tokens (only the subset the Small Talk cards read) ---- */
+:root {
+  --md-sys-color-primary: #006781;
+  --md-sys-color-on-surface: #191c1e;
+  --md-sys-color-on-surface-variant: #40484c;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f5f6f8;
+  --md-sys-color-outline: #70787d;
+  --md-sys-color-outline-variant: #c0c8cd;
+
+  --md-sys-shape-corner-lg: 1em; /* 16px @16 */
+
+  --md-sys-elevation-1:
+    0 1px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --md-sys-elevation-3:
+    0 1px 3px 0 rgba(0, 0, 0, 0.3),
+    0 4px 8px 3px rgba(0, 0, 0, 0.15);
+}
+
+.entries-list .archive__item {
+  margin-bottom: 1.5em;
+}
+
+.archive__item .card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--md-sys-color-surface-container-lowest);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-lg);
+  box-shadow: var(--md-sys-elevation-1);
+  overflow: hidden;
+  transition:
+    box-shadow 150ms ease,
+    border-color 150ms ease;
+}
+
+.archive__item .card:hover {
+  box-shadow: var(--md-sys-elevation-3);
+  border-color: var(--md-sys-color-outline);
+}
+
+.archive__item .card__header {
+  padding: 1.25em 1.5em 0;
+}
+
+.archive__item .card__title {
+  margin: 0;
+  font-size: 1.25em;
+  line-height: 1.3;
+}
+
+.archive__item .card__title a {
+  color: var(--md-sys-color-on-surface);
+  text-decoration: none;
+}
+
+.archive__item .card__title a:hover {
+  color: var(--md-sys-color-primary);
+  text-decoration: underline;
+}
+
+.archive__item .card__content {
+  padding: 0.5em 1.5em 1.25em;
+}
+
+.archive__item .card__content .archive__item-excerpt {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.6;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Meta footer: a tinted strip divided from the body, grouping the secondary
+   "about this post" facts (date / author / version) together. */
+.archive__item .card__footer {
+  margin-top: auto;
+  padding: 0.65em 1.5em;
+  background-color: var(--md-sys-color-surface-container-low);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.archive__item .card__footer .page__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em 1.5em;
+  margin: 0;
+  font-size: 0.8em;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.archive__item .card__footer .page__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0;
+}
+
+.archive__item .card__footer .page__meta-item i {
+  color: var(--md-sys-color-primary);
+}
