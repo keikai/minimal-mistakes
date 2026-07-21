@@ -32,7 +32,7 @@ function copyButtonAlreadyExists(block) {
 
 function createCopyButton() {
     const template = document.createElement('template');
-    template.innerHTML = `<button class="code-copy-btn" title="Copy code" aria-label="Copy code to clipboard">
+    template.innerHTML = `<button class="code-copy-btn" title="Copy code" aria-label="Copy code to clipboard" aria-live="polite">
         <i class="fas fa-copy"></i>
     </button>`;
     return template.content.firstElementChild;
@@ -173,40 +173,50 @@ function removeTemporaryTextArea(textArea) {
 }
 
 function displayCopySuccessMessage(button) {
-    createAndShowMessage(button, 'Copied!', 'success');
+    showInlineCopyFeedback(button, 'Copied', 'success');
 }
 
 function displayCopyErrorMessage(button, message) {
-    createAndShowMessage(button, message, 'error');
+    showInlineCopyFeedback(button, message, 'error');
 }
 
-function createAndShowMessage(button, message, type) {
-    const messageEl = createMessageElement(message, type);
-    initializeMessageElementOpacity(messageEl);
-    showMessageWithAnimation(messageEl, button);
+/* Feedback is shown in place: the button itself swaps to a state icon plus a
+   short label, then reverts — no floating toast outside the code block. */
+function showInlineCopyFeedback(button, message, type) {
+    rememberDefaultButtonContent(button);
+    cancelPendingFeedbackReset(button);
+    renderFeedbackState(button, message, type);
+    scheduleFeedbackReset(button);
 }
 
-function createMessageElement(message, type) {
-    const template = document.createElement('template');
-    template.innerHTML = `<span class="copy-message copy-message-${type}">${message}</span>`;
-    return template.content.firstElementChild;
-}
-
-function initializeMessageElementOpacity(messageEl) {
-    messageEl.style.opacity = '0';
-}
-
-function showMessageWithAnimation(messageEl, button) {
-    button.parentNode.appendChild(messageEl);
-    messageEl.style.opacity = '1';
-
-    setTimeout(function() {
-        hideAndRemoveMessage(messageEl);
-    }, 1000);
-}
-
-function hideAndRemoveMessage(messageEl) {
-    if (messageEl.parentNode) {
-        messageEl.parentNode.removeChild(messageEl);
+function rememberDefaultButtonContent(button) {
+    if (!button.dataset.defaultHtml) {
+        button.dataset.defaultHtml = button.innerHTML;
     }
+}
+
+function cancelPendingFeedbackReset(button) {
+    if (button.dataset.feedbackTimer) {
+        clearTimeout(Number(button.dataset.feedbackTimer));
+    }
+}
+
+function renderFeedbackState(button, message, type) {
+    const iconClass = type === 'success' ? 'fa-check' : 'fa-exclamation-circle';
+    button.classList.remove('copy-feedback-success', 'copy-feedback-error');
+    button.classList.add(`copy-feedback-${type}`);
+    button.innerHTML = `<i class="fas ${iconClass}"></i><span class="code-copy-label">${message}</span>`;
+}
+
+function scheduleFeedbackReset(button) {
+    const timer = setTimeout(function() {
+        restoreDefaultButtonContent(button);
+    }, 2000);
+    button.dataset.feedbackTimer = String(timer);
+}
+
+function restoreDefaultButtonContent(button) {
+    button.innerHTML = button.dataset.defaultHtml;
+    button.classList.remove('copy-feedback-success', 'copy-feedback-error');
+    delete button.dataset.feedbackTimer;
 }

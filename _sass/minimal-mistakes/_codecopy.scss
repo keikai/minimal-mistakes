@@ -13,14 +13,14 @@
   padding: 6px 8px;
   font-size: 12px;
   cursor: pointer;
-  opacity: 0;
+  opacity: 0.7;
   transition: opacity 0.2s ease, background-color 0.2s ease;
   z-index: 10;
   line-height: 1;
 
   &:hover {
     background: rgba(0, 0, 0, 0.8);
-    opacity: 1 !important;
+    opacity: 1;
   }
 
   &:focus {
@@ -34,14 +34,9 @@
   }
 }
 
-/* Show button on code block hover */
 .highlight,
 .highlighter-rouge {
   position: relative;
-
-  &:hover .code-copy-btn {
-    opacity: 0.7;
-  }
 
   pre {
     margin: 0;
@@ -65,27 +60,21 @@
   }
 }
 
-/* Copy message styles */
-.copy-message {
-  position: absolute;
-  top: -36px;
-  right: 0;
-  margin-top: 5px;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 3px;
-  white-space: nowrap;
-  z-index: 1000;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+/* In-place copy feedback: the button swaps to a state icon + short label,
+   staying anchored inside the code block instead of a floating toast */
+.code-copy-btn .code-copy-label {
+  margin-left: 0.4em;
+}
 
-  &.copy-message-success {
-    background-color: #28a745;
-    color: white;
-  }
+.code-copy-btn.copy-feedback-success,
+.code-copy-btn.copy-feedback-error {
+  opacity: 1;
+}
 
-  &.copy-message-error {
-    background-color: #dc3545;
-    color: white;
-  }
+.code-copy-btn.copy-feedback-success .fas {
+  color: mix(#fff, $success-color, 20%); // theme token, lightened for the dark chip
+}
+
+.code-copy-btn.copy-feedback-error .fas {
+  color: $danger-color;
 }
