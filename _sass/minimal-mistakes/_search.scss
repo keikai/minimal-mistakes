@@ -97,6 +97,47 @@
     }
   }
 
+  .search-scopes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+    margin: 0.75em 0 0.5em;
+  }
+
+  .search-scope {
+    padding: 0.3em 0.9em;
+    font-size: $type-size-6;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.4;
+    color: $muted-text-color;
+    background-color: transparent;
+    border: 1px solid $border-color;
+    border-radius: 1.25em;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+      background-color: $active-color;
+      color: $text-color;
+    }
+
+    &.is-active {
+      color: #fff;
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+
+  .archive__item-book {
+    display: inline-block;
+    margin-bottom: 0.25em;
+    padding: 0.1em 0.6em;
+    font-size: $type-size-7;
+    color: $muted-text-color;
+    background-color: $lighter-gray;
+    border-radius: 1em;
+  }
+
   .results__found {
     margin-top: 0.5em;
     font-size: $type-size-6;

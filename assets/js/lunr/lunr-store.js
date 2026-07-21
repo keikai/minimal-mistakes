@@ -9,6 +9,8 @@ var store = [
     {%- endif -%}
     {%- assign docs = c.docs | where_exp:'doc','doc.search != false' -%}
     {%- for doc in docs -%}
+      {%- assign _seg = doc.url | split: '/' -%}
+      {%- assign _book = _seg[1] -%}
       {%- if doc.header.teaser -%}
         {%- capture teaser -%}{{ doc.header.teaser }}{%- endcapture -%}
       {%- else -%}
@@ -42,6 +44,7 @@ var store = [
           {%- endif -%}
         "categories": {{ doc.categories | jsonify }},
         "tags": {{ doc.tags | jsonify }},
+        "book": {{ _book | jsonify }},
         "url": {{ doc.url | relative_url | jsonify }},
         "teaser": {{ teaser | relative_url | jsonify }}
       }{%- unless forloop.last and l -%},{%- endunless -%}
@@ -52,6 +55,8 @@ var store = [
     {%- if forloop.last -%}
       {%- assign l = true -%}
     {%- endif -%}
+    {%- assign _seg = doc.url | split: '/' -%}
+    {%- assign _book = _seg[1] -%}
   {
     "title": {{ doc.title | jsonify }},
     "excerpt":
@@ -78,6 +83,7 @@ var store = [
             replace:"</h6>", " "|
           strip_html | strip_newlines | truncatewords: 50 | jsonify }},
         {%- endif -%}
+      "book": {{ _book | jsonify }},
       "url": {{ doc.url | absolute_url | jsonify }}
   }{%- unless forloop.last and l -%},{%- endunless -%}
   {%- endfor -%}

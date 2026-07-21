@@ -8,6 +8,14 @@
     </label>
     <input type="search" id="search" class="search-input" tabindex="-1" placeholder="{{ site.data.ui-text[site.locale].search_placeholder_text | default: 'Enter your search term...' }}" />
   </form>
+  {%- if site.data.search_scopes -%}
+  <div id="search-scopes" class="search-scopes" role="group" aria-label="{{ site.data.ui-text[site.locale].search_scope_label | default: 'Search scope' }}">
+    <button type="button" class="search-scope is-active" data-scope="" aria-pressed="true">{{ site.data.ui-text[site.locale].search_scope_all | default: 'All' }}</button>
+    {%- for scope in site.data.search_scopes -%}
+    <button type="button" class="search-scope" data-scope="{{ scope.prefix }}" aria-pressed="false">{{ scope.title }}</button>
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
   <div id="results" class="results"></div>
   {%- when "google" -%}
   <form onsubmit="return googleCustomSearchExecute();" id="cse-search-box-form-id" role="search">
