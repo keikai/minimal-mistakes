@@ -2,6 +2,34 @@
    SEARCH
    ========================================================================== */
 
+/*
+   Material Design 3 role tokens for the full-screen search view.
+   Every color is derived from the active skin so the search view stays
+   consistent with the rest of the site -- do not hard-code a Material
+   baseline palette here.
+*/
+$search-surface-container-high: mix($background-color, $primary-color, 92%) !default;
+$search-on-surface: $text-color !default;
+$search-on-surface-variant: $muted-text-color !default;
+$search-outline-variant: $border-color !default;
+$search-secondary-container: mix($background-color, $primary-color, 85%) !default;
+$search-on-secondary-container: mix(#000, $primary-color, 45%) !default;
+$search-state-hover: rgba($primary-color, 0.08) !default;
+$search-state-pressed: rgba($primary-color, 0.12) !default;
+
+/* MD3 shape scale, in em so it tracks the type scale */
+$search-shape-sm: 0.5em !default; /* 8dp  -- filter chips, badges */
+$search-shape-md: 0.75em !default; /* 12dp -- result rows */
+$search-shape-xl: 1.75em !default; /* 28dp -- search bar */
+
+/* MD3 elevation level 1 and standard easing */
+$search-elevation-1: 0 1px 2px rgba(#000, 0.3), 0 1px 3px 1px rgba(#000, 0.15) !default;
+$search-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
+
+/* Monochrome masks -- tinted via background-color, so they follow the skin */
+$search-mask-magnifier: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2'%20stroke-linecap='round'%3E%3Ccircle%20cx='11'%20cy='11'%20r='7'/%3E%3Cline%20x1='16.2'%20y1='16.2'%20x2='21'%20y2='21'/%3E%3C/svg%3E") !default;
+$search-mask-check: url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23000'%20stroke-width='2.4'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpolyline%20points='4,12.5%2010,18.5%2020,6'/%3E%3C/svg%3E") !default;
+
 .layout--search {
   .archive__item-teaser {
     margin-bottom: 0.25em;
@@ -35,8 +63,8 @@
 .search-content {
   display: none;
   visibility: hidden;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1.5em;
+  padding-bottom: 3em;
 
   &__inner-wrap {
     width: 100%;
@@ -55,35 +83,74 @@
 
   }
 
+  /* MD3 docked search bar ------------------------------------------------ */
+
   &__form {
+    position: relative;
+    /*
+       The theme gives every form 1em of padding. Left in place it insets the
+       bar from the chips and results below it, and -- because an absolutely
+       positioned child anchors to the form's padding box, not the input's --
+       it drags the leading icon almost onto the bar's rounded edge.
+    */
+    padding: 0;
+    margin-bottom: 0;
     background-color: transparent;
+
+    /* Leading magnifier, tinted through a mask so it follows the skin. */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 1em; /* 16dp inset, matching the MD3 search bar */
+      width: 1.5em; /* 24dp icon */
+      height: 1.5em;
+      transform: translateY(-50%);
+      background-color: $search-on-surface-variant;
+      -webkit-mask: $search-mask-magnifier no-repeat center / contain;
+      mask: $search-mask-magnifier no-repeat center / contain;
+      pointer-events: none;
+    }
   }
 
   .search-input {
     display: block;
+    width: 100%;
+    height: 3.5em; /* 56dp */
     margin-bottom: 0;
-    padding: 8px 8px;
-    background-color: transparent;
-    font-size: $type-size-4;
-    font-family: 'Roboto', sans-serif;
+    /* 16dp inset + 24dp icon + 16dp gap = text starts at 56dp */
+    padding: 0 1.5em 0 3.5em;
+    color: $search-on-surface;
+    background-color: $search-surface-container-high;
+    font-family: $sans-serif;
+    font-size: $type-size-5; /* body-large; 1rem also avoids iOS zoom-on-focus */
     font-weight: 400;
-    line-height: 40px;
-    border-radius: 0;
+    line-height: 3.5em;
+    letter-spacing: 0.03125em;
+    border: 0;
+    border-radius: $search-shape-xl;
+    box-shadow: none;
+    -webkit-transition: background-color 0.2s $search-easing-standard,
+      box-shadow 0.2s $search-easing-standard;
+    transition: background-color 0.2s $search-easing-standard,
+      box-shadow 0.2s $search-easing-standard;
 
     &::placeholder {
-      color: rgba(34, 40, 49, 0.3);
-      font-family: 'Roboto', sans-serif;
+      color: $search-on-surface-variant;
+      font-family: $sans-serif;
+      font-size: inherit;
       font-weight: 400;
-      font-size: 14px;
-      line-height: 56px;
+      line-height: inherit;
+      opacity: 1;
     }
 
-    @include breakpoint($large) {
-      font-size: $type-size-4;
+    &:hover {
+      background-color: mix(#000, $search-surface-container-high, 4%);
     }
 
-    @include breakpoint($x-large) {
-      font-size: $type-size-5;
+    &:focus {
+      outline: none;
+      box-shadow: $search-elevation-1, inset 0 0 0 2px $primary-color;
     }
   }
 
@@ -97,70 +164,210 @@
     }
   }
 
+  /* MD3 filter chips ----------------------------------------------------- */
+
   .search-scopes {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.4em;
-    margin: 0.75em 0 0.5em;
+    gap: 0.5em;
+    margin: 1em 0 0;
+
+    /*
+       Compact windows: MD3 renders a chip set as a single horizontally
+       scrollable row. With 16 books, wrapping would push the first result
+       roughly 450px down the page on a phone.
+    */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.25em;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include breakpoint($medium) {
+      flex-wrap: wrap;
+      overflow-x: visible;
+      padding-bottom: 0;
+    }
   }
 
   .search-scope {
-    padding: 0.3em 0.9em;
-    font-size: $type-size-6;
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.4;
-    color: $muted-text-color;
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    min-height: 2rem; /* 32dp touch target, independent of the label size */
+    padding: 0.25em 1em;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    color: $search-on-surface-variant;
     background-color: transparent;
-    border: 1px solid $border-color;
-    border-radius: 1.25em;
+    font-family: $sans-serif;
+    font-size: $type-size-6; /* label-large */
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.00625em;
+    border: 1px solid $search-outline-variant;
+    border-radius: $search-shape-sm; /* 8dp -- MD3 filter chips are not pills */
     cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    -webkit-transition: background-color 0.2s $search-easing-standard,
+      color 0.2s $search-easing-standard, border-color 0.2s $search-easing-standard;
+    transition: background-color 0.2s $search-easing-standard,
+      color 0.2s $search-easing-standard, border-color 0.2s $search-easing-standard;
 
     &:hover {
-      background-color: $active-color;
-      color: $text-color;
+      color: $search-on-surface;
+      background-color: $search-state-hover;
+    }
+
+    &:active {
+      background-color: $search-state-pressed;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $primary-color;
+      outline-offset: 2px;
     }
 
     &.is-active {
-      color: #fff;
-      background-color: $primary-color;
-      border-color: $primary-color;
+      padding-left: 0.625em;
+      color: $search-on-secondary-container;
+      background-color: $search-secondary-container;
+      border-color: transparent;
+
+      /* Keep the current scope at the head of the compact scroller. */
+      order: -1;
+
+      @include breakpoint($medium) {
+        order: 0;
+      }
+
+      /* Selected filter chips carry a leading checkmark in MD3. */
+      &::before {
+        content: "";
+        flex: none;
+        width: 1.125em;
+        height: 1.125em;
+        margin-right: 0.375em;
+        background-color: currentColor;
+        -webkit-mask: $search-mask-check no-repeat center / contain;
+        mask: $search-mask-check no-repeat center / contain;
+      }
+
+      &:hover {
+        background-color: mix(#000, $search-secondary-container, 8%);
+      }
+    }
+  }
+
+  /* Result list ---------------------------------------------------------- */
+
+  .results__found {
+    margin: 1.5em 0 0;
+    padding-bottom: 0.75em;
+    color: $search-on-surface-variant;
+    font-size: $type-size-6;
+    font-weight: 500;
+    letter-spacing: 0.00625em;
+    border-bottom: 1px solid $search-outline-variant;
+  }
+
+  .list__item {
+    margin: 0;
+
+    + .list__item {
+      border-top: 1px solid $search-outline-variant;
+    }
+  }
+
+  /*
+     Fill the available width. Upstream Minimal Mistakes caps this at 75%/50%
+     for a blog-style measure, which leaves half of a $max-width: 100% layout
+     empty. Snippets are word-capped by the lunr renderer, so a full-width row
+     stays scannable.
+  */
+  .archive__item {
+    width: 100%;
+    margin-bottom: 0;
+    padding: 0.875em 0.75em;
+    border-radius: $search-shape-md;
+    -webkit-transition: background-color 0.2s $search-easing-standard;
+    transition: background-color 0.2s $search-easing-standard;
+
+    @include breakpoint($small) {
+      padding: 1em 1.25em;
+    }
+
+    /* The permalink overlay makes the whole row clickable -- show a state layer. */
+    &:hover {
+      background-color: $search-state-hover;
     }
   }
 
   .archive__item-book {
     display: inline-block;
-    margin-bottom: 0.25em;
-    padding: 0.1em 0.6em;
+    margin-bottom: 0.5em;
+    padding: 0.15em 0.75em;
+    color: $search-on-secondary-container;
+    background-color: $search-secondary-container;
     font-size: $type-size-7;
-    color: $muted-text-color;
-    background-color: $lighter-gray;
-    border-radius: 1em;
-  }
-
-  .results__found {
-    margin-top: 0.5em;
-    font-size: $type-size-6;
-  }
-
-  .archive__item {
-    margin-bottom: 2em;
-
-    @include breakpoint($large) {
-      width: 75%;
-    }
-
-    @include breakpoint($x-large) {
-      width: 50%;
-    }
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.03125em;
+    border-radius: $search-shape-sm;
   }
 
   .archive__item-title {
-    margin-top: 0;
+    margin: 0 0 0.15em;
+    font-family: $sans-serif;
+    font-size: $type-size-4; /* title-large */
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.009375em;
+
+    /*
+       Config-reference titles are long dotted identifiers. Upstream clips them
+       with an ellipsis, which hides the part that tells them apart -- wrap
+       instead so the whole key stays readable on narrow screens.
+    */
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .archive__item-excerpt {
-    margin-bottom: 0;
+    margin: 0;
+    color: $search-on-surface-variant;
+    font-size: $type-size-6; /* body-medium */
+    line-height: 1.6;
+    letter-spacing: 0.015625em;
+    /* Snippets quote long class names and ZUL attributes -- never let one
+       of those push the page into horizontal scroll. */
+    overflow-wrap: break-word;
+
+    + .archive__item-excerpt {
+      margin-top: 0.4em;
+    }
+
+    mark {
+      padding: 0 0.15em;
+      color: $search-on-secondary-container;
+      background-color: mix($background-color, $primary-color, 75%);
+      font-weight: 500;
+      border-radius: 0.2em;
+    }
   }
 }
 
@@ -261,30 +468,37 @@
 }
 
 .page-url {
-  font-size: 0.7rem;
-  color: $muted-text-color;
-  word-break: break-word;
-  margin-top: 0.5em;
   display: block;
+  margin: 0 0 0.4em;
+  color: $search-on-surface-variant;
   font-family: $monospace;
+  font-size: $type-size-7; /* body-small */
+  line-height: 1.5;
+  word-break: break-word;
 }
 
-/* No exact match warning message */
+/* No exact match warning message -- MD3 tonal surface, warning role */
 .search-no-exact-match {
-  padding: 1em;
-  margin-bottom: 1em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625em;
+  padding: 1em 1.25em;
+  margin: 1.5em 0 0;
   background-color: mix($background-color, $warning-color, $notice-background-mix);
-  border-radius: $border-radius;
-  box-shadow: 0 1px 1px rgba($warning-color, 0.25);
+  border-radius: $search-shape-md;
+  box-shadow: none;
   color: $text-color;
   font-size: $type-size-6;
+  line-height: 1.6;
+  letter-spacing: 0.015625em;
 
   i {
-    margin-right: 0.5em;
-    color: $warning-color;
+    margin-right: 0;
+    line-height: 1.6;
+    color: mix(#000, $warning-color, 20%);
   }
 
   strong {
-    font-weight: 600;
+    font-weight: 500;
   }
 }
