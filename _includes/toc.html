@@ -77,7 +77,13 @@
 
     {% assign firstHeader = true %}
     {% assign currLevel = 0 %}
-    {% assign lastLevel = 0 %}
+    {% assign openLevels = '' %} <!-- Digits of the heading levels whose lists are currently open, e.g. "134" -->
+
+    {% comment %}
+        A skipped heading level (h1 followed by h4) only ever opens one list, so the number of lists to
+        close when the level drops again cannot be derived from the level difference; track what was
+        actually opened instead.
+    {% endcomment %}
 
     {% capture listModifier %}{% if orderedList %}ol{% else %}ul{% endif %}{% endcapture %}
 
@@ -138,28 +144,42 @@
             {% capture listItem %}{{ anchorBody }}{% endcapture %}
         {% endif %}
 
-        {% if currLevel > lastLevel %}
-            {% capture jekyll_toc %}{{ jekyll_toc }}<{{ listModifier }}{{ subMenuClass }}>{% endcapture %}
-        {% elsif currLevel < lastLevel %}
-            {% assign repeatCount = lastLevel | minus: currLevel %}
+        {% assign openCount = openLevels | size %}
+        {% if openCount == 0 %}
+            {% assign lastOpenLevel = 0 %}
+        {% else %}
+            {% assign lastOpenLevel = openLevels | slice: -1, 1 | times: 1 %}
+        {% endif %}
 
-            {% for i in (1..repeatCount) %}
+        {% if currLevel > lastOpenLevel %}
+            {% capture jekyll_toc %}{{ jekyll_toc }}<{{ listModifier }}{{ subMenuClass }}>{% endcapture %}
+            {% assign openLevels = openLevels | append: currLevel %}
+        {% else %}
+            {% for i in (1..6) %}
+                {% assign openCount = openLevels | size %}
+                {% if openCount < 2 %} <!-- Never close the root list -->
+                    {% break %}
+                {% endif %}
+
+                {% assign lastOpenLevel = openLevels | slice: -1, 1 | times: 1 %}
+                {% if currLevel >= lastOpenLevel %}
+                    {% break %}
+                {% endif %}
+
                 {% capture jekyll_toc %}{{ jekyll_toc }}</li></{{ listModifier }}>{% endcapture %}
+                {% assign openCount = openCount | minus: 1 %}
+                {% assign openLevels = openLevels | slice: 0, openCount %}
             {% endfor %}
 
-            {% capture jekyll_toc %}{{ jekyll_toc }}</li>{% endcapture %}
-        {% else %}
             {% capture jekyll_toc %}{{ jekyll_toc }}</li>{% endcapture %}
         {% endif %}
 
         {% capture jekyll_toc %}{{ jekyll_toc }}<li{{ listItemClass }}>{{ listItem }}{% endcapture %}
 
-        {% assign lastLevel = currLevel %}
         {% assign firstHeader = false %}
     {% endfor %}
 
-    {% assign repeatCount = minHeader | minus: 1 %}
-    {% assign repeatCount = lastLevel | minus: repeatCount %}
+    {% assign repeatCount = openLevels | size %}
     {% for i in (1..repeatCount) %}
         {% capture jekyll_toc %}{{ jekyll_toc }}</li></{{ listModifier }}>{% endcapture %}
     {% endfor %}
