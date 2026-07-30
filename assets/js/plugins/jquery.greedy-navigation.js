@@ -17,6 +17,14 @@ $(function() {
 
   var numOfItems, totalSpace, closingTime, breakWidths;
 
+  // Width an element actually takes up in the navbar.
+  // jQuery reports a non-zero outerWidth for "display: none" elements (it measures
+  // them off-layout), so measuring unconditionally subtracts phantom width from
+  // availableSpace and hides menu items that would have fit.
+  function usedWidth($el) {
+    return $el.length !== 0 && $el.is(":visible") ? $el.outerWidth(true) : 0;
+  }
+
   // This function measures both hidden and visible links and sets the navbar breakpoints
   // This is called the first time the script runs and everytime the "check()" function detects a change of window width that reached a different CSS width breakpoint, which affects the size of navbar Items
   // Please note that "CSS width breakpoints" (which are only 4) !== "navbar breakpoints" (which are as many as the number of items on the navbar)
@@ -68,9 +76,9 @@ $(function() {
     numOfVisibleItems = $vlinks.children().length;
     // Decrease the width of visible elements from the nav innerWidth to find out the available space for navItems
     availableSpace = /* nav */ $nav.innerWidth()
-                   - /* logo */ ($logo.length !== 0 ? $logo.outerWidth(true) : 0)
-                   - /* title */ $title.outerWidth(true)
-                   - /* search */ ($search.length !== 0 ? $search.outerWidth(true) : 0)
+                   - /* logo */ usedWidth($logo)
+                   - /* title */ usedWidth($title)
+                   - /* search */ usedWidth($search)
                    - /* toggle */ (numOfVisibleItems !== breakWidths.length ? $btn.outerWidth(true) : 0);
     requiredSpace = breakWidths[numOfVisibleItems - 1];
 
